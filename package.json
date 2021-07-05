@@ -1,0 +1,182 @@
+{
+  "name": "contentful-cli",
+  "version": "0.0.0-determined-by-semantic-release",
+  "description": "Contentful CLI tool",
+  "main": "bin/contentful.js",
+  "bin": {
+    "contentful": "bin/contentful.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/contentful/contentful-cli.git"
+  },
+  "author": "Contentful <opensource@contentful.com>",
+  "license": "MIT",
+  "scripts": {
+    "audit": "resolve-audit",
+    "build:standalone": "pkg --targets node12-macos-x64,node12-linux-x64,node12-win-x64 --out-dir build .",
+    "build:package": "npm run build:standalone && script/package",
+    "bump-brew-formula": "script/bump-brew-formula.sh",
+    "lint": "eslint bin lib test",
+    "test": "npm run test:coverage",
+    "test:coverage": "nyc npm run test:unit",
+    "test:html-coverage": "nyc --reporter=html npm run test:unit",
+    "test:unit": "jest --maxWorkers=2 test/unit/** --verbose",
+    "test:unit:watch": "jest test/unit/** --verbose --watch",
+    "pretest:integration": "node test/integration/scripts/pre-test.js",
+    "pretest:integration:ci": "npm run pretest:integration",
+    "pretest:integration:update": "npm run pretest:integration",
+    "posttest:integration": "node test/integration/scripts/post-test.js",
+    "posttest:integration:ci": "npm run posttest:integration",
+    "posttest:integration:update": "npm run posttest:integration",
+    "test:jest": "jest test/integration/cmds/**",
+    "test:integration": "NODE_ENV=test concurrently \"npm:run-talkback-proxy\" \"npm:test:jest\" --success first --kill-others",
+    "test:integration:ci": "NODE_ENV=test concurrently \"npm:run-talkback-proxy\" \"npm:test:jest -- --runInBand\" --success first --kill-others",
+    "test:integration:update": "NODE_ENV=test concurrently \"npm:run-talkback-proxy\" \"npm:test:jest -- --updateSnapshot\" --success first --kill-others",
+    "test:e2e": "cross-env jest --testPathPattern=test/e2e --verbose",
+    "test:simulate-ci": "trevor",
+    "precommit": "npm run prettier:write && lint-staged",
+    "prepush": "jest --changedSince master test/unit/**",
+    "prettier": "prettier --config .prettierrc \"./*.js\" \"{./lib,./test,./docs,.}/**/*.{js,json,md}\"",
+    "prettier:write": "npm run prettier -- --write",
+    "prettier:debug": "npm run prettier -- --debug-check",
+    "run-talkback-proxy": "node test/proxy.js",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "app-root-path": "^2.1.0",
+    "axios": "^0.19.0",
+    "concurrently": "^5.0.2",
+    "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "http-proxy": "^1.17.0",
+    "husky": "^0.14.3",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.4.0",
+    "nixt": "^0.5.1",
+    "node-zip": "^1.1.1",
+    "nyc": "^14.1.1",
+    "pkg": "^4.4.0",
+    "rimraf": "^2.6.1",
+    "semantic-release": "^16.0.2",
+    "stream-buffers": "^3.0.2",
+    "strip-ansi": "^4.0.0",
+    "talkback": "^1.6.0",
+    "trevor": "^2.3.0"
+  },
+  "dependencies": {
+    "ast-types": "^0.11.5",
+    "bfj": "^6.1.1",
+    "blessed": "^0.1.81",
+    "bluebird": "^3.5.0",
+    "camelcase": "^5.0.0",
+    "chalk": "^2.4.1",
+    "cli-table3": "^0.5.1",
+    "command-exists": "^1.2.7",
+    "contentful-export": "^7.7.2",
+    "contentful-import": "^7.7.0",
+    "contentful-management": "^5.12.0",
+    "contentful-migration": "^v1.0.13",
+    "emojic": "^1.1.11",
+    "execa": "^0.10.0",
+    "figlet": "^1.2.0",
+    "find-up": "^3.0.0",
+    "https-proxy-agent": "^3.0.1",
+    "inquirer": "^7.0.0",
+    "inquirer-select-directory": "^1.2.0",
+    "listr": "^0.14.1",
+    "lodash": "^4.17.15",
+    "marked": "^0.8.0",
+    "mkdirp": "^0.5.1",
+    "mz": "^2.6.0",
+    "npm-audit-resolver": "^2.0.1",
+    "open": "^6.4.0",
+    "path": "^0.12.7",
+    "prettier": "^1.18.2",
+    "recast": "^0.15.3",
+    "rxjs": "^5.5.6",
+    "shell-escape": "^0.2.0",
+    "tar": "^4.4.4",
+    "to-ast": "^1.0.0",
+    "tree-kill": "^1.2.2",
+    "wrap-ansi": "^3.0.1",
+    "yargs": "^13.2.4",
+    "zlib": "^1.0.5"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "docs",
+    "version.js",
+    "README.md"
+  ],
+  "jest": {
+    "testURL": "http://localhost/"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 80,
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "pkg": {
+    "scripts": [
+      "./node_modules/blessed/lib/widgets/*.js",
+      "./lib/**/*.js"
+    ],
+    "assets": [
+      "./node_modules/figlet/fonts/Standard.flf"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "build/contentful-cli-macos-*.zip",
+              "name": "contentful-cli-macos-${nextRelease.version}.zip",
+              "label": "MacOS executable"
+            },
+            {
+              "path": "build/contentful-cli-linux-*.zip",
+              "name": "contentful-cli-linux-${nextRelease.version}.zip",
+              "label": "Linux executable"
+            },
+            {
+              "path": "build/contentful-cli-win-*.zip",
+              "name": "contentful-cli-win-${nextRelease.version}.zip",
+              "label": "Windows executable"
+            }
+          ]
+        }
+      ]
+    ]
+  }
+}

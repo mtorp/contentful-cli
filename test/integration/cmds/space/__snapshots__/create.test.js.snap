@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should exit 1 when no args: help data is incorrect 1`] = `
+"Usage: contentful space create --name 'Your Space Name'
+
+Options:
+  -h, --help                Show help                                  [boolean]
+  --name, -n                Name of the space to create               [required]
+  --management-token, --mt  Contentful management API token             [string]
+  --organization-id, --org  Organization owning the new space
+  --yes, -y                 Confirm space creation without prompt, be aware this
+                            may result in extra monthly charges depend on your
+                            subscription
+  --default-locale, -l      The default locale of the new space         [string]
+  --use, -u                 Use the created space as default space when the
+                            --space-id is skipped.                     [boolean]
+
+Copyright 2019 Contentful
+Missing required argument: name"
+`;
+
+exports[`should print help message: help data is incorrect 1`] = `
+"Usage: contentful space create --name 'Your Space Name'
+
+Options:
+  -h, --help                Show help                                  [boolean]
+  --name, -n                Name of the space to create               [required]
+  --management-token, --mt  Contentful management API token             [string]
+  --organization-id, --org  Organization owning the new space
+  --yes, -y                 Confirm space creation without prompt, be aware this
+                            may result in extra monthly charges depend on your
+                            subscription
+  --default-locale, -l      The default locale of the new space         [string]
+  --use, -u                 Use the created space as default space when the
+                            --space-id is skipped.                     [boolean]
+
+Copyright 2019 Contentful"
+`;
