@@ -1,3 +1,4 @@
+const { catchError } = require('rxjs/operators');
 const nixt = require('nixt')
 const { resolve } = require('path')
 const { initConfig, createSimpleSpace, deleteSpaces } = require('../../util')
@@ -130,11 +131,10 @@ test('should create extension from config file', done => {
               }
             ]
           })
-        })
-        .catch(err => {
+        }).pipe(catchError(err => {
           console.error(err)
           done.fail()
-        })
+        }))
         .then(done)
     })
 }, 10000)
@@ -178,11 +178,10 @@ test('should create extension from config file with srcdoc', done => {
               }
             ]
           })
-        })
-        .catch(err => {
+        }).pipe(catchError(err => {
           console.error(err)
           done.fail()
-        })
+        }))
         .then(done)
     })
 })
